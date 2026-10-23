@@ -3,7 +3,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_VERSION:=1.0.2
-PKG_RELEASE:=2025101
+PKG_RELEASE:=2025102
 META_TITLE:=CodeServer
 META_TITLE.en:=CodeServer
 META_DEPENDS:=+luci-app-codeserver +luci-i18n-codeserver-zh-cn +docker-deps

@@ -3,7 +3,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_VERSION:=1.0.1
-PKG_RELEASE:=20251011
+PKG_RELEASE:=20251012
 META_TITLE:=UptimeKuma
 META_TITLE.en:=UptimeKuma
 META_DEPENDS:=+luci-app-uptimekuma +luci-i18n-uptimekuma-zh-cn +docker-deps

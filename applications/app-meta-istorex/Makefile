@@ -3,12 +3,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_VERSION:=3.0.21
-PKG_RELEASE:=3
+PKG_RELEASE:=4
 META_TITLE:=iStoreNAS(原iStoreX)
 META_TITLE.en:=iStoreNAS(iStoreX)
 # iStoreNAS is the product bundle that aggregates LinkEaseFull core with the
 # selected NAS business applications.
-META_DEPENDS:=+app-meta-linkeasefull +app-meta-dockermanager +app-meta-kai +app-meta-baidudrive +app-meta-istoreenhance +luci-theme-istorenas
+META_DEPENDS:=+app-meta-linkeasefull +app-meta-dockermanager +app-meta-kaiplus +app-meta-baidudrive +app-meta-istoreenhance +luci-theme-istorenas
 META_DESCRIPTION:=把 iStoreOS 一键变成 NAS 系统，网盘，同步，组网，时光机，AI 等一网打尽。
 META_DESCRIPTION.en:=Turn iStoreOS into a NAS system in one click, covering cloud drives, sync, networking, Time Machine, AI, and more.
 META_AUTHOR:=Xiaobao

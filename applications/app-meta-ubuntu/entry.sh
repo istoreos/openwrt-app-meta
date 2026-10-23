@@ -1,57 +1,61 @@
 #!/bin/sh
-
+# Read-only status; actions never install a missing container.
 ISTOREC_SCRIPT=/usr/libexec/istorec/ubuntu2.sh
 
-status(){
-    local host="$1"
-    [ -n "$host" ] || host=127.0.0.1
-    . /usr/share/libubox/jshn.sh
-    json_init
-    json_add_string "app" "ubuntu"
-    json_add_boolean "docker" "1"
+read_state() {
+    state=$("$ISTOREC_SCRIPT" status 2>/dev/null) || return 1
+    case "$state" in
+        ''|running|created|restarting|paused|exited|dead|removing) ;;
+        *) return 1 ;;
+    esac
+}
 
-    local status=`$ISTOREC_SCRIPT status 2>/dev/null`
-    if [ "$status" = "running" ]; then
-        json_add_boolean "running" "1"
-        local port=`$ISTOREC_SCRIPT port`
-        local portsec=${port:-3001}
-        json_add_string "web" ":${portsec}"
-        json_add_string "href" "https://$host:${portsec}/"
-        json_add_string "protocol" http
-        json_add_string "port" ${portsec}
-    else
-        json_add_boolean "running" "0"
-        if [ -z "$status" ]; then
-            json_add_boolean "deployed" "0"
-        else
-            json_add_boolean "deployed" "1"
+status() {
+    local state port host="${1:-127.0.0.1}" running=0 deployed=0
+    read_state || return 1
+    [ -z "$state" ] || deployed=1
+    if [ "$state" = running ]; then
+        running=1
+        port=$("$ISTOREC_SCRIPT" port 2>/dev/null) || return 1
+        if [ -n "$port" ]; then
+            case "$port" in *[!0-9]*) return 1 ;; esac
+            [ "${#port}" -le 5 ] && [ "$port" -ge 1 ] && [ "$port" -le 65535 ] || return 1
         fi
     fi
-
+    . /usr/share/libubox/jshn.sh
+    json_init
+    json_add_string app ubuntu
+    json_add_boolean docker 1
+    json_add_boolean running "$running"
+    json_add_boolean deployed "$deployed"
+    if [ "$running" = 1 ] && [ -n "$port" ]; then
+        json_add_string web ":$port"
+        json_add_string href "https://$host:$port/"
+        json_add_string protocol https
+        json_add_string port "$port"
+    fi
     json_dump
     json_cleanup >/dev/null
 }
 
-start(){
-    # [ -z "`$ISTOREC_SCRIPT status`" ] && $ISTOREC_SCRIPT install && sleep 5
-    [ -z "`$ISTOREC_SCRIPT status`" ] && return 1
-    [ "`$ISTOREC_SCRIPT status`" = "running"] || $ISTOREC_SCRIPT start
+start() {
+    local state
+    read_state || return 1
+    [ -n "$state" ] || return 1
+    [ "$state" != running ] || return 0
+    "$ISTOREC_SCRIPT" start
 }
 
-stop(){
-    [ "`$ISTOREC_SCRIPT status`" != "running"] || $ISTOREC_SCRIPT stop
+stop() {
+    local state
+    read_state || return 1
+    [ "$state" = running ] || return 0
+    "$ISTOREC_SCRIPT" stop
 }
 
-ACTION=${1}
-shift 1
-[ -z "${ACTION}" ] && ACTION=help
-
-case ${ACTION} in
-  "status" | "start" | "stop")
-    ${ACTION} "$@"
-  ;;
-  *)
-    echo "Unknown Action" >&2
-    exit 1
-  ;;
+action="${1:-}"
+[ "$#" -eq 0 ] || shift
+case "$action" in
+    status|start|stop) "$action" "$@" ;;
+    *) echo 'Unknown action' >&2; exit 1 ;;
 esac

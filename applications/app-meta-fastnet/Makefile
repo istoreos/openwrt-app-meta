@@ -3,7 +3,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_VERSION:=0.7.7
-PKG_RELEASE:=5
+PKG_RELEASE:=7
 META_TITLE:=FastNet 网络测速
 META_TITLE.en:=FastNet
 META_DEPENDS:=+fastnet +luci-app-fastnet +luci-i18n-fastnet-zh-cn
@@ -13,6 +13,7 @@ META_AUTHOR:=xiaobao
 META_ARCH:=x86_64 aarch64
 META_TAGS:=networking service
 META_LUCI_ENTRY:=/cgi-bin/luci/admin/services/fastnet
+META_UCI:=fastnet
 META_WEBSITE:=https://www.koolcenter.com/t/topic/9148
 
 include ../../meta.mk

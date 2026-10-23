@@ -3,7 +3,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_VERSION:=1.0.8
-PKG_RELEASE:=20250325
+PKG_RELEASE:=20250326
 META_TITLE:=OpenWebUI
 META_TITLE.en:=OpenWebUI
 META_DEPENDS:=+luci-app-openwebui +luci-i18n-openwebui-zh-cn +docker-deps

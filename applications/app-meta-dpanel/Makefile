@@ -3,7 +3,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_VERSION:=1.0.0
-PKG_RELEASE:=20251009
+PKG_RELEASE:=20251010
 META_TITLE:=DPanel 可视化面板
 META_TITLE.en:=DPanel - lightweight docker management panel
 META_DEPENDS:=+luci-app-dpanel +luci-i18n-dpanel-zh-cn +docker-deps

@@ -3,7 +3,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_VERSION:=1.0.1
-PKG_RELEASE:=20250403
+PKG_RELEASE:=20250404
 META_TITLE:=OneAPI
 META_TITLE.en:=OneAPI
 META_DEPENDS:=+luci-app-oneapi +luci-i18n-oneapi-zh-cn +docker-deps
