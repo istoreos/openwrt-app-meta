@@ -2,7 +2,7 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_VERSION:=1.0.9
+PKG_VERSION:=1.0.11
 PKG_RELEASE:=3
 META_TITLE:=酷友社KAI
 META_TITLE.en:=KoolCenter KaiPlus
