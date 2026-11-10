@@ -70,3 +70,11 @@
 3. 创建PR用的临时分支：切换到 `main` 分支，点击分支下拉菜单，在输入框输入新分支的名称（也就是不存在的分支名称），例如 `add_app_jellyfin` ，搜索结果会变成 `Create branch: *** from 'main'` ，点这个搜索结果，稍等会自动创建并切换到新分支
 4. 在新分支中进行更改，完成以后提交PR
 5. 等PR合并以后，可以在 `branches` 页面删除临时分支，也可以保留临时分支，但是不要再进行变更和PR
+
+## 应用注册归属
+
+本仓库只提供软件中心元数据、软件中心图标和依赖。应用清单与注册链接由对应运行包或已有 LuCI 包持有，统一安装到 `/usr/share/linkease/apps.d`，不在 `app-meta-*` 的 root 中重复安装。
+
+统一规范位于工作区 `istoreos-app-hub/docs/architecture/linkease-app-registration.md`。迁移后的 DDNSTO 由 luci-app-ddnsto 持有清单和应用图标；FastNet 由 fastnet 运行包持有。元包保留原有 `META_DEPENDS:=+包名` 普通依赖，不新增最低版本约束，不修改共享 meta.mk 或 CI。
+
+先发布实际插件的新版本，用户更新相关插件后，由插件自身完成注册迁移。只升级元包不代表设备上的全部插件已迁移；宿主切换到只读新注册目录前，应在目标设备上完成相关插件更新。

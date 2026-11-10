@@ -3,7 +3,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_VERSION:=0.3.5
-PKG_RELEASE:=2
+PKG_RELEASE:=3
 META_TITLE:=AgentFlow
 META_DEPENDS:=+agentflow +luci-app-agentflow
 META_DESCRIPTION:=AgentFlow 提供 OpenCode、Codex、Claude 编码代理与工作流编排 Web UI。
