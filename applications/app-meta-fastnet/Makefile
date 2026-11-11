@@ -3,7 +3,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_VERSION:=0.8.9
-PKG_RELEASE:=19
+PKG_RELEASE:=20
 META_TITLE:=FastNet 网络测速
 META_TITLE.en:=FastNet
 META_DEPENDS:=+fastnet +luci-app-fastnet +luci-i18n-fastnet-zh-cn
@@ -15,6 +15,18 @@ META_TAGS:=networking service
 META_LUCI_ENTRY:=/cgi-bin/luci/admin/services/fastnet
 META_UCI:=fastnet
 META_WEBSITE:=https://www.koolcenter.com/t/topic/9148
+
+# The old metadata package owned the legacy JSON. Its upgrade may remove
+# the compatibility link created by the plugin; let the installed owner repair it.
+define Package/app-meta-fastnet/postinst
+#!/bin/sh
+root="$${IPKG_INSTROOT:-}"
+helper="$${root}/usr/share/fastnet/register-desktop.sh"
+if [ -f "$${helper}" ]; then
+	sh "$${helper}" || exit $$?
+fi
+exit 0
+endef
 
 include ../../meta.mk
 

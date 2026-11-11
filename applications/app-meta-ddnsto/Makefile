@@ -3,7 +3,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_VERSION:=4.2.8
-PKG_RELEASE:=2
+PKG_RELEASE:=3
 META_TITLE:=DDNSTO路由远程
 META_TITLE.en:=DDNSTO
 META_DEPENDS:=+ddnsto +luci-app-ddnsto +luci-i18n-ddnsto-zh-cn
@@ -14,6 +14,18 @@ META_ARCH:=x86_64 aarch64
 META_TAGS:=networking service
 META_LUCI_ENTRY:=/cgi-bin/luci/admin/services/ddnsto
 META_WEBSITE:=https://www.ddnsto.com/
+
+# The old metadata package owned the legacy JSON. Its upgrade may remove
+# the compatibility link created by the plugin; let the installed owner repair it.
+define Package/app-meta-ddnsto/postinst
+#!/bin/sh
+root="$${IPKG_INSTROOT:-}"
+helper="$${root}/usr/share/ddnsto/register-desktop.sh"
+if [ -f "$${helper}" ]; then
+	sh "$${helper}" || exit $$?
+fi
+exit 0
+endef
 
 include ../../meta.mk
 
