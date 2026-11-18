@@ -11,7 +11,7 @@ status() {
 	port="$(uci -q get kaiplus.@kaiplus[0].port 2>/dev/null)"
 	[ -n "$port" ] || port=8189
 
-	if pidof kaiplus >/dev/null 2>&1; then
+	if pidof kaiplus kaiplus_bin >/dev/null 2>&1; then
 		json_add_boolean "running" "1"
 		json_add_string "web" ":${port}/apps/kaiplus/"
 		json_add_string "protocol" "http"
