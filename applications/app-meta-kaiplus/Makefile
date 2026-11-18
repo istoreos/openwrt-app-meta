@@ -1,11 +1,11 @@
 # This is free software, licensed under the Apache License, Version 2.0 .
 
 include $(TOPDIR)/rules.mk
-PKG_VERSION:=1.0.11
-PKG_RELEASE:=6
+PKG_VERSION:=1.0.18
+PKG_RELEASE:=1
 META_TITLE:=酷友社KAI
 META_TITLE.en:=KoolCenter KaiPlus
-META_DEPENDS:=+luci-app-kaiplus +kaiplus
+META_DEPENDS:=+luci-app-kaiplus +kaiplus +luci-i18n-kaiplus-zh-cn
 META_DESCRIPTION:=酷友社KAI 解决各种问题，加速软件安装
 META_DESCRIPTION.en:=KaiPlus AI solves various network issues and speeds up software installation.
 META_AUTHOR:=koolcenter
