@@ -15,4 +15,6 @@ uci -q batch <<-EOF >/dev/null || exit 1
 	commit kaiplus
 EOF
 
-/etc/init.d/kaiplus restart || true
+# KaiPlus owns idempotent protection setup after registering this data directory.
+# Surface a service-start failure instead of reporting successful configuration.
+/etc/init.d/kaiplus restart
