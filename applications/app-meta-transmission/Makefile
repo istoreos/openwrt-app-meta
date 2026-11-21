@@ -2,10 +2,10 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_VERSION:=4.0.6
-PKG_RELEASE:=4
+PKG_VERSION:=4.1.2
+PKG_RELEASE:=1
 META_TITLE:=Transmission
-META_DEPENDS:=+transmission-daemon-openssl +transmission-web-control +luci-app-transmission +luci-i18n-transmission-zh-cn
+META_DEPENDS:=+transmission-daemon +transmission-web-control +luci-app-transmission +luci-i18n-transmission-zh-cn
 META_DESCRIPTION:=专业磁力种子下载工具
 META_DESCRIPTION.en:=Transmission is a cross-platform BitTorrent client.
 META_AUTHOR:=The Transmission project
