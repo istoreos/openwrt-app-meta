@@ -3,11 +3,11 @@
 include $(TOPDIR)/rules.mk
 
 PKG_VERSION:=0.3.5
-PKG_RELEASE:=4
+PKG_RELEASE:=9
 META_TITLE:=AgentFlow
 META_DEPENDS:=+agentflow +luci-app-agentflow
-META_DESCRIPTION:=AgentFlow 提供 OpenCode、Codex、Claude 编码代理与工作流编排 Web UI。
-META_DESCRIPTION.en:=AgentFlow provides a Web UI for coding agents and workflow orchestration.
+META_DESCRIPTION:=AgentFlow 提供项目、编码代理与工程工作流编排 Web UI。
+META_DESCRIPTION.en:=AgentFlow provides a Web UI for project, coding-agent and engineering workflow orchestration.
 META_AUTHOR:=geiliai
 META_ARCH:=x86_64 aarch64
 META_TAGS:=development ai service

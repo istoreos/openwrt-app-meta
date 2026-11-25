@@ -1,21 +1,16 @@
 #!/bin/sh
 
 status() {
-	local port
 	. /usr/share/libubox/jshn.sh
 	json_init
 	json_add_string "app" "kaiplus"
 	json_add_boolean "docker" "0"
-	json_add_string "href" "/cgi-bin/luci/admin/services/kaiplus/open"
-
-	port="$(uci -q get kaiplus.@kaiplus[0].port 2>/dev/null)"
-	[ -n "$port" ] || port=8189
+	json_add_string "href" "/cgi-bin/luci/admin/services/kaiplus"
 
 	if pidof kaiplus kaiplus_bin >/dev/null 2>&1; then
 		json_add_boolean "running" "1"
-		json_add_string "web" ":${port}/apps/kaiplus/"
+		json_add_string "web" "/cgi-bin/luci/admin/services/linkease_apps/open?id=kaiplus"
 		json_add_string "protocol" "http"
-		json_add_string "port" "$port"
 		json_add_boolean "deployed" "1"
 	else
 		json_add_boolean "running" "0"
