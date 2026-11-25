@@ -1,5 +1,5 @@
 #!/bin/sh
-# Standalone app-meta entry: no shared runtime installation is required.
+# Application launch delegates to the shared entry; the backend is Unix-only.
 APP=dockermanager
 ENTRY_INIT=/etc/init.d/dockermanager
 
@@ -7,46 +7,10 @@ ENTRY_INIT=/etc/init.d/dockermanager
 relevant_instance() { [ "$1" = docker_manager ]; }
 runtime_target() {
     [ "$binary" = /usr/sbin/docker-manager ] || return 1
-    local mode address path
+    local mode
     mode=$(env_value DOCKER_MANAGER_LISTEN_MODE) || return 1
-    path=$(env_value DOCKER_MANAGER_BASE_PATH) || return 1
-    case "$path" in /*) ;; *) path="/$path" ;; esac
-    case "$path" in */) ;; *) path="$path/" ;; esac
-    safe_path "$path" || return 1
-    case "$mode" in
-        unix)
-            # Delegate Unix transport and proxy/auth readiness to the shared resolver.
-            web='/cgi-bin/luci/admin/services/linkease_apps/open?id=dockermanager'
-            ;;
-        tcp)
-            address=$(env_value DOCKER_MANAGER_ADDR) || return 1
-            tcp_target "${address%:*}" "${address##*:}" "$path"
-            ;;
-        *) return 1 ;;
-    esac
-}
-
-# Values below are read from the running procd instance, not pending UCI edits.
-valid_port() {
-    case "$1" in ''|*[!0-9]*) return 1 ;; esac
-    [ "${#1}" -le 5 ] && [ "$1" -ge 1 ] && [ "$1" -le 65535 ]
-}
-
-command_value() {
-    local keys key value found=0 result=''
-    json_select command || return 1
-    json_get_keys keys
-    for key in $keys; do
-        json_get_var value "$key"
-        if [ "$found" = 1 ]; then result=$value; found=2
-        elif [ "$value" = "$1" ]; then
-            [ "$found" = 0 ] || { json_select ..; return 1; }
-            found=1
-        fi
-    done
-    json_select ..
-    [ "$found" = 2 ] || return 1
-    printf '%s' "$result"
+    [ "$mode" = unix ] || return 1
+    web='/cgi-bin/luci/admin/services/linkease_apps/open?id=dockermanager'
 }
 
 env_value() {
@@ -59,25 +23,9 @@ env_value() {
     printf '%s' "$value"
 }
 
-# Only expose a LAN-capable TCP listener. Unknown/loopback binds keep management.
-tcp_target() {
-    local address="$1" value="$2" path="${3:-}"
-    valid_port "$value" || return 1
-    case "$address" in
-        ''|127.*|localhost|::1|'[::1]') return 0 ;;
-    esac
-    port=$value
-    web=":$port$path"
-}
-
-safe_path() {
-    case "$1" in *[!a-zA-Z0-9_./~-]*|//*|*/../*|*/./*|*/..|*/.) return 1 ;; esac
-    return 0
-}
-
 status() {
     . /usr/share/libubox/jshn.sh
-    local deployed=0 running=0 state keys instance active binary kind web='' port='' _json_no_warning=1
+    local deployed=0 running=0 state keys instance active binary kind web='' _json_no_warning=1
     if [ -x "$ENTRY_INIT" ]; then
         deployed=1
         state=$(ubus -S call service list "{\"name\":\"$APP\"}" 2>/dev/null) || return 1
@@ -119,7 +67,6 @@ status() {
     if [ "$running" = 1 ] && [ -n "$web" ]; then
         json_add_string web "$web"
         json_add_string protocol http
-        [ -z "$port" ] || json_add_string port "$port"
     fi
     json_dump
     json_cleanup >/dev/null
