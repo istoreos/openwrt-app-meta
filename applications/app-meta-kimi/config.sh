@@ -14,5 +14,11 @@ uci -q batch <<-EOF >/dev/null
 	commit kimi
 EOF
 
+runtime_root="$(uci -q get mise.main.storage_root 2>/dev/null || true)"
+if [ -z "$runtime_root" ]; then
+	/etc/init.d/kimi stop || true
+	exit 0
+fi
+
 /usr/libexec/kimi-runtime prepare "$data_dir" >/dev/null
 if [ "$enabled" = 1 ]; then /etc/init.d/kimi restart || true; else /etc/init.d/kimi stop || true; fi

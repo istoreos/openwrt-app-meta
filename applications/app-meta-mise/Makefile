@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_VERSION:=0.1.1
-PKG_RELEASE:=6
+PKG_RELEASE:=7
 META_TITLE:=运行时环境
 META_TITLE.en:=Runtime Environments
 META_DEPENDS:=+mise-runtime +luci-app-mise

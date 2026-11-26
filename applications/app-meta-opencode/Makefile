@@ -3,7 +3,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_VERSION:=2.4.1
-PKG_RELEASE:=4
+PKG_RELEASE:=6
 META_TITLE:=OpenCode
 META_TITLE.en:=OpenCode
 META_DEPENDS:=+opencode +luci-app-opencode +luci-app-mise
