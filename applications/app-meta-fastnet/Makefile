@@ -3,7 +3,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_VERSION:=0.8.10
-PKG_RELEASE:=22
+PKG_RELEASE:=23
 META_TITLE:=FastNet 网络测速
 META_TITLE.en:=FastNet
 META_DEPENDS:=+fastnet +luci-app-fastnet +luci-i18n-fastnet-zh-cn
@@ -23,7 +23,7 @@ define Package/app-meta-fastnet/postinst
 root="$${IPKG_INSTROOT:-}"
 helper="$${root}/usr/share/fastnet/register-desktop.sh"
 if [ -f "$${helper}" ]; then
-	sh "$${helper}" || exit $$?
+	sh "$${helper}" || printf '%s\n' 'app-meta-fastnet: unable to repair the compatibility app entry.' >&2
 fi
 exit 0
 endef
