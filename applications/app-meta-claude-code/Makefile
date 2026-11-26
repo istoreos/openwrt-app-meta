@@ -3,7 +3,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_VERSION:=2.1.326
-PKG_RELEASE:=4
+PKG_RELEASE:=5
 META_TITLE:=Claude Code
 META_TITLE.en:=Claude Code
 META_DEPENDS:=+claude-code +luci-app-claude-code +luci-app-mise

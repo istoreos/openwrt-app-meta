@@ -3,7 +3,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_VERSION:=2.7.3
-PKG_RELEASE:=4
+PKG_RELEASE:=5
 META_TITLE:=Kimi Code
 META_TITLE.en:=Kimi Code
 META_DEPENDS:=+kimi +luci-app-kimi +luci-app-mise
