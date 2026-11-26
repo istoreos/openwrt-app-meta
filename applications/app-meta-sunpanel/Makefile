@@ -3,7 +3,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_VERSION:=1.3.1
-PKG_RELEASE:=7
+PKG_RELEASE:=8
 META_TITLE:=SunPanel导航页
 META_TITLE.en:=SunPanel navigation panel
 META_DEPENDS:=+luci-i18n-sunpanel-zh-cn +sunpanel +luci-app-sunpanel

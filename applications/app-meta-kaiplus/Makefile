@@ -2,7 +2,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_VERSION:=1.0.25
-PKG_RELEASE:=12
+PKG_RELEASE:=14
 META_TITLE:=酷友社KAI
 META_TITLE.en:=KoolCenter KaiPlus
 META_DEPENDS:=+luci-app-kaiplus +kaiplus +luci-i18n-kaiplus-zh-cn

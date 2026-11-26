@@ -14,5 +14,11 @@ uci -q batch <<-EOF >/dev/null
 	commit codex
 EOF
 
+runtime_root="$(uci -q get mise.main.storage_root 2>/dev/null || true)"
+if [ -z "$runtime_root" ]; then
+	/etc/init.d/codex stop || true
+	exit 0
+fi
+
 /usr/libexec/codex-runtime prepare "$data_dir" >/dev/null
 if [ "$enabled" = 1 ]; then /etc/init.d/codex restart || true; else /etc/init.d/codex stop || true; fi

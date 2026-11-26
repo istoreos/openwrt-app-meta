@@ -3,7 +3,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_VERSION:=0.172.0
-PKG_RELEASE:=4
+PKG_RELEASE:=5
 META_TITLE:=Codex
 META_TITLE.en:=Codex
 META_DEPENDS:=+codex +luci-app-codex +luci-app-mise

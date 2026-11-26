@@ -14,5 +14,11 @@ uci -q batch <<-EOF >/dev/null
 	commit claude
 EOF
 
+runtime_root="$(uci -q get mise.main.storage_root 2>/dev/null || true)"
+if [ -z "$runtime_root" ]; then
+	/etc/init.d/claude stop || true
+	exit 0
+fi
+
 /usr/libexec/claude-runtime prepare "$data_dir" >/dev/null
 if [ "$enabled" = 1 ]; then /etc/init.d/claude restart || true; else /etc/init.d/claude stop || true; fi
