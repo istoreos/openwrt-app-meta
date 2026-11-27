@@ -3,7 +3,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_VERSION:=1.0.0
-PKG_RELEASE:=4
+PKG_RELEASE:=5
 META_TITLE:=DSH
 META_TITLE.en:=DSH
 META_DEPENDS:=+dsh +luci-app-dsh +luci-i18n-dsh-zh-cn +docker-deps
