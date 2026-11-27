@@ -4,7 +4,7 @@ set -eu
 
 enabled=1
 [ -z "${ISTORE_DONT_START:-}" ] || enabled=0
-data_dir="$ISTORE_CONF_DIR/Kimi Code"
+data_dir="$ISTORE_CONF_DIR/KimiCode"
 
 uci -q batch <<-EOF >/dev/null
 	set kimi.main=kimi
